@@ -13,7 +13,6 @@ namespace Bibliotheek
         static void Main(string[] args)
         {
             //TO DO     - bool instead of count
-            //          - if list empty, show "list is empty"
 
             Console.Title = "In de bibliotheek".ToUpper();
 
@@ -248,20 +247,35 @@ namespace Bibliotheek
 
         private static void ToonMaterialen(string[] boekTitel, string[] boekAuteurs, string[] tijdschriftNamen)
         {
-            Console.WriteLine("Boeken beschikbaar: ");
-
             boekTitel = boekTitel.Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
             boekAuteurs = boekAuteurs.Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
             tijdschriftNamen = tijdschriftNamen.Where(s => !string.IsNullOrWhiteSpace (s)).ToArray();
 
-            for (int i = 0; i < boekTitel.Length; i++)
+            Console.WriteLine("\nBeschikbaar materialen: \n");
+            if (boekTitel.Length <= 0)
             {
-                Console.WriteLine($"\t{boekTitel[i]} van {boekAuteurs[i]}.");
+                Console.WriteLine("Sorry, er zijn geen beschikbaar boeken.");
             }
-            Console.WriteLine("Tijdschriften beschikbaar: ");
-            for (int i = 0; i < tijdschriftNamen.Length; i++)
+            else
             {
-                Console.WriteLine($"\t{tijdschriftNamen[i]}");
+                Console.WriteLine("Beschikbaar boeken: ");
+                for (int i = 0; i < boekTitel.Length; i++)
+                {
+                    Console.WriteLine($"\t{boekTitel[i]} van {boekAuteurs[i]}.");
+                }
+            }
+            
+            if (tijdschriftNamen.Length <= 0)
+            {
+                Console.WriteLine("Sorry er zijn geen beschikbaar tijdschriften.");
+            }
+            else
+            {
+                Console.WriteLine("Beschikbaar tijdschriften: ");
+                for (int i = 0; i < tijdschriftNamen.Length; i++)
+                {
+                    Console.WriteLine($"\t{tijdschriftNamen[i]}");
+                }
             }
             Console.WriteLine();
         }
