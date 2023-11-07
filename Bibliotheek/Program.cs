@@ -98,6 +98,36 @@ namespace Bibliotheek
                                 }
                                 break;
                             }
+                            else if (lendChoice == "2")
+                            {
+                                Console.WriteLine("Welke gebruiker wilt een materiaal uitlenen? ");
+                                string renterUserInput = Console.ReadLine();
+                                for (int i = 0; i < gebruikers.Length; i++)
+                                {
+                                    if (gebruikers[i] == renterUserInput)
+                                    {
+                                        //What material to lend
+                                        //if book available => ok
+                                        //if not => not ok
+                                        //cw book lent to user
+                                        //remove material from first array
+                                        //add material to borrowed array
+                                    }
+                                    else
+                                    {
+                                        //User not in array
+                                        //Does the user want to be a client?
+                                        //if no : cw must be a client to borrow book
+                                        //if yes: what material to lend
+                                        //if book available => ok
+                                        //if not => not ok
+                                        //cw book lent to user
+                                        //remove material from first array
+                                        //add material to borrowed array
+                                    }
+                                }
+                                break;
+                            }
                         }
                         break;
                     case "7":
