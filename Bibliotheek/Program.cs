@@ -11,6 +11,9 @@ namespace Bibliotheek
     {
         static void Main(string[] args)
         {
+            //TO DO     - bool instead of count
+            //          - Remove empty strings from array
+
             Console.Title = "In de bibliotheek".ToUpper();
 
             string[] boekTitel = { "Les Fleurs du mal", "aaa" };
