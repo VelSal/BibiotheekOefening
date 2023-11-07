@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Bibliotheek
 {
@@ -12,7 +13,6 @@ namespace Bibliotheek
         static void Main(string[] args)
         {
             //TO DO     - bool instead of count
-            //          - Remove empty strings from array
             //          - if list empty, show "list is empty"
 
             Console.Title = "In de bibliotheek".ToUpper();
@@ -27,7 +27,6 @@ namespace Bibliotheek
             WelcomeBericht();
             MainProgram(ref boekTitel, ref boekAuteurs, ref tijdschriftNamen, ref gebruikers);
             Console.ReadLine();
-
         }
 
         static void ClearScreen()
@@ -50,7 +49,9 @@ namespace Bibliotheek
                 Console.WriteLine("\t3. Materiaal verwijderen.");
                 Console.WriteLine("\t4. Materiaal zoeken.");
                 Console.WriteLine("\t5. Nieuwe gebruiker registreren.");
-                Console.WriteLine("\t6. Prograam sluiten.");
+                Console.WriteLine("\t6. Materialen uiilenen YET TO DO.");
+                Console.WriteLine("\t7. Materialen terugbrengen YET TO DO.");
+                Console.WriteLine("\t8. Prograam sluiten.");
                 Console.WriteLine();
 
                 userMenuChoiceInput = Console.ReadLine();
@@ -83,6 +84,16 @@ namespace Bibliotheek
                         gebruikers = RegistreerGebruiker(gebruikers);
                         break;
                     case "6":
+                        ClearScreen();
+                        Console.WriteLine("\"Materialen uitlenen\" gekozen.");
+                        //Code here
+                        break;
+                    case "7":
+                        ClearScreen();
+                        Console.WriteLine("\"Materialen teruggeven\" gekozen.");
+                        //Code here
+                        break;
+                    case "8":
                         ClearScreen();
                         Console.WriteLine("Tot ziens!");
                         isRunning = false;
@@ -166,9 +177,9 @@ namespace Bibliotheek
                     Console.WriteLine($"{boekTitel[i]} van {boekAuteurs[i]} verwijderd.\n");
                     boekTitel[i] = "";
                     boekAuteurs[i] = "";
-                    //boekTitel[i] = null;
                 }
             }
+            
             for (int i = 0; i < tijdschriftNamen.Length; i++)
             {
                 if (tijdschriftNamen[i].ToLower() == deleteBookInput.ToLower())
@@ -238,7 +249,10 @@ namespace Bibliotheek
         private static void ToonMaterialen(string[] boekTitel, string[] boekAuteurs, string[] tijdschriftNamen)
         {
             Console.WriteLine("Boeken beschikbaar: ");
-            
+
+            boekTitel = boekTitel.Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
+            boekAuteurs = boekAuteurs.Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
+
             for (int i = 0; i < boekTitel.Length; i++)
             {
                 Console.WriteLine($"\t{boekTitel[i]} van {boekAuteurs[i]}.");

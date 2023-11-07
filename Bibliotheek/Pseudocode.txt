@@ -1,4 +1,4 @@
-﻿Menu from 1 - 5 already done
+﻿Menu from 1 - 5 already done (see code)
 
 6: Lend materials
 	1: Show lent materials
@@ -24,7 +24,7 @@
 		|			else: "Book not available"
 		|		2 magazine
 		|			- magazineNameInput
-					if magazine is in BorrowedBooks array -> add in tijdschrifsNamen array
+		|			if magazine is in BorrowedBooks array -> add in tijdschrifsNamen array
 		|			else: "Magazine not available"
 		|		
 		|		if book is in 
