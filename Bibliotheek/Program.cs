@@ -24,7 +24,7 @@ namespace Bibliotheek
             string[] borrowedUser = { "Toto", "Jojo", "Jojo" };
 
             WelcomeBericht();
-            MainProgram(ref boekTitel, ref boekAuteurs, ref tijdschriftNamen, ref gebruikers);
+            MainProgram(ref boekTitel, ref boekAuteurs, ref tijdschriftNamen, ref gebruikers, ref borrowedMaterials, ref borrowedUser);
             Console.ReadLine();
         }
 
@@ -35,7 +35,7 @@ namespace Bibliotheek
             WelcomeBericht();
         }
 
-        private static void MainProgram(ref string[] boekTitel, ref string[] boekAuteurs, ref string[] tijdschriftNamen, ref string[] gebruikers)
+        private static void MainProgram(ref string[] boekTitel, ref string[] boekAuteurs, ref string[] tijdschriftNamen, ref string[] gebruikers, ref string[] borrowedMaterials, ref string[] borrowedUser)
         {
             bool isRunning = true;
             string userMenuChoiceInput = "";
@@ -48,7 +48,7 @@ namespace Bibliotheek
                 Console.WriteLine("\t3. Materiaal verwijderen.");
                 Console.WriteLine("\t4. Materiaal zoeken.");
                 Console.WriteLine("\t5. Nieuwe gebruiker registreren.");
-                Console.WriteLine("\t6. Materialen uiilenen YET TO DO.");
+                Console.WriteLine("\t6. Materialen uitlenen YET TO DO.");
                 Console.WriteLine("\t7. Materialen terugbrengen YET TO DO.");
                 Console.WriteLine("\t8. Prograam sluiten.");
                 Console.WriteLine();
@@ -85,7 +85,20 @@ namespace Bibliotheek
                     case "6":
                         ClearScreen();
                         Console.WriteLine("\"Materialen uitlenen\" gekozen.");
-                        //Code here
+                        Console.WriteLine("1. Uitgeleend materialen zien.");
+                        Console.WriteLine("2. Materiaal lenen.");
+                        string lendChoice = Console.ReadLine();
+                        while (lendChoice == "1" || lendChoice == "2")
+                        {
+                            if (lendChoice == "1")
+                            {
+                                for (int i = 0; i < borrowedMaterials.Length; i++)
+                                {
+                                    Console.WriteLine($"{borrowedMaterials[i]} uitgeleend aan {borrowedUser[i]}.");
+                                }
+                                break;
+                            }
+                        }
                         break;
                     case "7":
                         ClearScreen();
@@ -115,7 +128,7 @@ namespace Bibliotheek
             Array.Resize(ref gebruikers, gebruikers.Length + 1);
             gebruikers[gebruikers.Length - 1] = nieuwGebruikerInput;
 
-            Console.WriteLine($"{nieuwGebruikerInput} is nu een gebruiker van de VelSal bibliotheek!\n");
+            Console.WriteLine($"{nieuwGebruikerInput} is nu een gebruiker van de O, R & S bibliotheek!\n");
             return gebruikers;
         }
 
