@@ -252,6 +252,7 @@ namespace Bibliotheek
 
             boekTitel = boekTitel.Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
             boekAuteurs = boekAuteurs.Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
+            tijdschriftNamen = tijdschriftNamen.Where(s => !string.IsNullOrWhiteSpace (s)).ToArray();
 
             for (int i = 0; i < boekTitel.Length; i++)
             {
