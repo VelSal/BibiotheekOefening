@@ -1,0 +1,35 @@
+﻿Menu from 1 - 5 already done
+
+6: Lend materials
+	1: Show lent materials
+		-> "material" is borrowed by "user"
+	2: Lend books
+		if user not in users array -> AddUser method
+								   -> choose a material to lend (*) 
+		else -> choose a material to lend (*)
+			if not in the available array -> The book is unavailable
+		
+		-> Remove material from the list (Remove Method?)
+		-> Add material (w/o author) to the BorrowedBooks array
+		-> Add user to BorrowedUsers array
+
+7: Give material back
+		-> Ask who the user is
+		if the user have materials to give back -> Show what material(s) does the user have.
+		|	-> what do you want to give back? 
+		|		1 book
+		|			- bookTitleinput
+		|			- authorInput
+		|			if book is in BorrowedBooks array -> add in boekTitel en bookAuthor array
+		|			else: "Book not available"
+		|		2 magazine
+		|			- magazineNameInput
+					if magazine is in BorrowedBooks array -> add in tijdschrifsNamen array
+		|			else: "Magazine not available"
+		|		
+		|		if book is in 
+		else -> user has nothing to give back
+
+
+
+(*) use the same method

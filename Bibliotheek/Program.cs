@@ -13,22 +13,24 @@ namespace Bibliotheek
         {
             //TO DO     - bool instead of count
             //          - Remove empty strings from array
+            //          - if list empty, show "list is empty"
 
             Console.Title = "In de bibliotheek".ToUpper();
 
-            string[] boekTitel = { "Les Fleurs du mal", "aaa" };
-            string[] boekAuteurs = { "Charles Baudelaire", "000" };
+            string[] boekTitel = { "Les Fleurs du mal", "Don Quichotte", "Monster" };
+            string[] boekAuteurs = { "Charles Baudelaire", "Miguel de Cervantes", "Naoki Urasawa" };
             string[] tijdschriftNamen = { "National Geographic" };
             string[] gebruikers = { "Toto", "Jojo" };
-            string[] borrowedBook = {"Bambi" , "Le Petit Prince", "bbb" };
+            string[] borrowedMaterials = {"Vogue" , "Le Petit Prince", "Pluto" };
             string[] borrowedUser = { "Toto", "Jojo", "Jojo" };
 
             WelcomeBericht();
             MainProgram(ref boekTitel, ref boekAuteurs, ref tijdschriftNamen, ref gebruikers);
             Console.ReadLine();
+
         }
 
-        private static void ClearScreen()
+        static void ClearScreen()
         {
             //Console.ReadLine();
             Console.Clear();
@@ -253,7 +255,7 @@ namespace Bibliotheek
         {
             Console.Write("Welcome to the ");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("VelSal ");
+            Console.Write("O, R & S ");
             Console.ResetColor();
             Console.WriteLine("Bibliotheek.\n");
             Console.WriteLine("      __...--~~~~~-._   _.-~~~~~--...__\n    //               `V'               \\\\\n   //                 |                 \\\\\n  //__...--~~~~~~-._  |  _.-~~~~~~--...__\\\\ \n //__.....----~~~~._\\ | /_.~~~~----.....__\\\\\n====================\\\\|//====================\n                    `---`\n");
