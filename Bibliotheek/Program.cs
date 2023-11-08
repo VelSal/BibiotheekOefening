@@ -16,12 +16,12 @@ namespace Bibliotheek
 
             Console.Title = "In de bibliotheek".ToUpper();
 
-            string[] boekTitel = { "Les Fleurs du mal", "Don Quichotte", "Monster" };
-            string[] boekAuteurs = { "Charles Baudelaire", "Miguel de Cervantes", "Naoki Urasawa" };
-            string[] tijdschriftNamen = { "National Geographic" };
-            string[] gebruikers = { "Toto", "Jojo" };
-            string[] borrowedMaterials = {"Vogue" , "Le Petit Prince", "Pluto" };
-            string[] borrowedUser = { "Toto", "Jojo", "Jojo" };
+            string[] boekTitel = { "les fleurs du mal", "don Quichotte", "monster" };
+            string[] boekAuteurs = { "charles baudelaire", "miguel de cervantes", "naoki urasawa" };
+            string[] tijdschriftNamen = { "national geographic" };
+            string[] gebruikers = { "toto", "jojo" };
+            string[] borrowedMaterials = {"vogue" , "le petit prince", "pluto" };
+            string[] borrowedUser = { "toto", "jojo", "jojo" };
 
             WelcomeBericht();
             MainProgram(ref boekTitel, ref boekAuteurs, ref tijdschriftNamen, ref gebruikers, ref borrowedMaterials, ref borrowedUser);
@@ -104,14 +104,53 @@ namespace Bibliotheek
                                 string renterUserInput = Console.ReadLine();
                                 for (int i = 0; i < gebruikers.Length; i++)
                                 {
-                                    if (gebruikers[i] == renterUserInput)
+                                    if (gebruikers[i].ToLower() == renterUserInput.ToLower())
                                     {
-                                        //What material to lend
-                                        //if book available => ok
-                                        //if not => not ok
-                                        //cw book lent to user
-                                        //remove material from first array
-                                        //add material to borrowed array
+                                        bool inLendMenu = true;
+                                        while (inLendMenu)
+                                        {
+                                            //What material to lend
+                                            Console.WriteLine("Welke soort materiaal wilt de gebruiker uitlenen?");
+                                            Console.WriteLine("\t1. Boek \t2. Tijdschrift");
+                                            string materialChoice = Console.ReadLine();
+                                            //if book available => ok
+                                            if (materialChoice == "1")
+                                            {
+                                                Console.Write("Titel val de boek: ");
+                                                string bookTitleChoice = Console.ReadLine().ToLower();
+                                                if (boekTitel.Contains(bookTitleChoice))
+                                                {
+                                                    Console.WriteLine($"{bookTitleChoice} uitgeleend aan {gebruikers[i]}");
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine($"{bookTitleChoice} is niet beschikbaar.");
+                                                }
+                                                inLendMenu=false;
+                                            }
+                                            else if (materialChoice == "2")
+                                            {
+                                                Console.Write("Titel val de tijdschrift: ");
+                                                string MagazineNameChoice = Console.ReadLine().ToLower();
+                                                if (tijdschriftNamen.Contains(MagazineNameChoice))
+                                                {
+                                                    Console.WriteLine($"{MagazineNameChoice} uitgeleend aan {gebruikers[i]}");
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine($"{MagazineNameChoice} is niet beschikbaar.");
+                                                }
+                                                inLendMenu=false;
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Verkeerde invoer");
+                                                inLendMenu = false;
+                                            }
+                                            //remove material from first array
+                                            //add material to borrowed array
+                                        }
+
                                     }
                                     else
                                     {
