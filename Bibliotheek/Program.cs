@@ -70,6 +70,7 @@ namespace Bibliotheek
                     case "3":
                         ClearScreen();
                         Console.WriteLine("\"Materialen verwijderen\" gekozen.");
+                        ToonMaterialen(boekTitel, boekAuteurs, tijdschriftNamen);
                         VerwijderMateriaal(boekTitel, boekAuteurs, tijdschriftNamen);
                         break;
                     case "4":
@@ -140,15 +141,15 @@ namespace Bibliotheek
                                                 {
                                                     Console.WriteLine($"{MagazineNameChoice} is niet beschikbaar.");
                                                 }
-                                                inLendMenu=false;
+                                                inLendMenu = false;
                                             }
                                             else
                                             {
-                                                Console.WriteLine("Verkeerde invoer");
+                                                Console.WriteLine("Verkeerde invoer...");
                                                 inLendMenu = false;
                                             }
-                                            //remove material from first array
                                             //add material to borrowed array
+                                            //remove material from first array
                                         }
 
                                     }
@@ -243,7 +244,6 @@ namespace Bibliotheek
 
         private static void VerwijderMateriaal(string[] boekTitel, string[] boekAuteurs, string[] tijdschriftNamen)
         {
-            ToonMaterialen(boekTitel, boekAuteurs, tijdschriftNamen);
             Console.Write("Welke materiaal wilt u verwijderen (schrijf de boek titel of tijdschrift naam a.u.b): ");
             string deleteBookInput = Console.ReadLine();
 
@@ -260,7 +260,7 @@ namespace Bibliotheek
                     boekAuteurs[i] = "";
                 }
             }
-            
+
             for (int i = 0; i < tijdschriftNamen.Length; i++)
             {
                 if (tijdschriftNamen[i].ToLower() == deleteBookInput.ToLower())
@@ -268,13 +268,21 @@ namespace Bibliotheek
                     count++;
                     Console.WriteLine($"{tijdschriftNamen[i]} verwijderd.\n");
                     tijdschriftNamen[i] = "";
-                    //tijdschriftNamen[i] = null;
                 }
             }
             if (count == 0)
             {
                 Console.WriteLine($"{deleteBookInput} is niet in de bibliotheek.");
             }
+
+            RemoveEmptyElements(ref boekTitel, ref boekAuteurs, ref tijdschriftNamen);
+        }
+
+        private static void RemoveEmptyElements(ref string[] boekTitel, ref string[] boekAuteurs, ref string[] tijdschriftNamen)
+        {
+            boekTitel = boekTitel.Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
+            boekAuteurs = boekAuteurs.Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
+            tijdschriftNamen = tijdschriftNamen.Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
         }
 
         private static void VoegMateriaalToe(ref string[] boekTitel, ref string[] boekAuteurs, ref string[] tijdschriftNamen)
@@ -329,9 +337,7 @@ namespace Bibliotheek
 
         private static void ToonMaterialen(string[] boekTitel, string[] boekAuteurs, string[] tijdschriftNamen)
         {
-            boekTitel = boekTitel.Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
-            boekAuteurs = boekAuteurs.Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
-            tijdschriftNamen = tijdschriftNamen.Where(s => !string.IsNullOrWhiteSpace (s)).ToArray();
+            RemoveEmptyElements(ref boekTitel, ref boekAuteurs, ref tijdschriftNamen);
 
             Console.WriteLine("\nBeschikbaar materialen: \n");
             if (boekTitel.Length <= 0)
