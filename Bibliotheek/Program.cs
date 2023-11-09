@@ -118,35 +118,14 @@ namespace Bibliotheek
                                             if (materialChoice == "1")
                                             {
                                                 Console.Write("Titel van de boek: ");
-                                                string bookTitleChoice = Console.ReadLine().ToLower();
-                                                if (boekTitel.Contains(bookTitleChoice))
-                                                {
-                                                    Console.WriteLine($"{bookTitleChoice} uitgeleend aan {gebruikers[i]}");
-                                                    Array.Resize(ref borrowedMaterials, borrowedMaterials.Length + 1);
-                                                    borrowedMaterials[borrowedMaterials.Length - 1] = bookTitleChoice;
-                                                    Array.Resize(ref borrowedUser, borrowedUser.Length + 1);
-                                                    borrowedUser[borrowedUser.Length - 1] = gebruikers[i];
-                                                }
-                                                else
-                                                {
-                                                    Console.WriteLine($"{bookTitleChoice} is niet beschikbaar.");
-                                                }
+                                                LendBook(boekTitel, gebruikers, ref borrowedMaterials, ref borrowedUser, i);
 
-                                                inLendMenu=false;
+                                                inLendMenu = false;
                                             }
                                             else if (materialChoice == "2")
                                             {
                                                 Console.Write("Titel van de tijdschrift: ");
-                                                string MagazineNameChoice = Console.ReadLine().ToLower();
-                                                if (tijdschriftNamen.Contains(MagazineNameChoice))
-                                                {
-                                                    Console.WriteLine($"{MagazineNameChoice} uitgeleend aan {gebruikers[i]}");
-                                                    
-                                                }
-                                                else
-                                                {
-                                                    Console.WriteLine($"{MagazineNameChoice} is niet beschikbaar.");
-                                                }
+                                                LendMagazine(tijdschriftNamen, gebruikers, ref borrowedMaterials, ref borrowedUser, i);
                                                 inLendMenu = false;
                                             }
                                             else
@@ -194,6 +173,38 @@ namespace Bibliotheek
             }
         }
 
+        private static void LendBook(string[] boekTitel, string[] gebruikers, ref string[] borrowedMaterials, ref string[] borrowedUser, int i)
+        {
+            string materialTitleChoice = Console.ReadLine().ToLower();
+            if (boekTitel.Contains(materialTitleChoice))
+            {
+                Console.WriteLine($"{materialTitleChoice} uitgeleend aan {gebruikers[i]}");
+                Array.Resize(ref borrowedMaterials, borrowedMaterials.Length + 1);
+                borrowedMaterials[borrowedMaterials.Length - 1] = materialTitleChoice;
+                Array.Resize(ref borrowedUser, borrowedUser.Length + 1);
+                borrowedUser[borrowedUser.Length - 1] = gebruikers[i];
+            }
+            else
+            {
+                Console.WriteLine($"{materialTitleChoice} is niet beschikbaar.");
+            }
+        }
+        private static void LendMagazine(string[] tijdschriftNamen, string[] gebruikers, ref string[] borrowedMaterials, ref string[] borrowedUser, int i)
+        {
+            string materialTitleChoice = Console.ReadLine().ToLower();
+            if (tijdschriftNamen.Contains(materialTitleChoice))
+            {
+                Console.WriteLine($"{materialTitleChoice} uitgeleend aan {gebruikers[i]}");
+                Array.Resize(ref borrowedMaterials, borrowedMaterials.Length + 1);
+                borrowedMaterials[borrowedMaterials.Length - 1] = materialTitleChoice;
+                Array.Resize(ref borrowedUser, borrowedUser.Length + 1);
+                borrowedUser[borrowedUser.Length - 1] = gebruikers[i];
+            }
+            else
+            {
+                Console.WriteLine($"{materialTitleChoice} is niet beschikbaar.");
+            }
+        }
         private static string[] RegistreerGebruiker(string[] gebruikers)
         {
             Console.Write("Naam van de nieuwe gebruiker: ");
