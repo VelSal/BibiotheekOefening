@@ -164,6 +164,41 @@ namespace Bibliotheek
                         //Code here
                         ShowBorrowedMaterials(borrowedMaterials, borrowedUser);
                         Console.WriteLine("Is het een boek of een tijdschrift? \n\t1. Boek\t2. Tijdschrift");
+                        string materialBack = Console.ReadLine();
+                        if (materialBack == "1")
+                        {
+                            Console.Write("Titel van het boek: ");
+                            string titleBookBack = Console.ReadLine().ToLower();
+                            if (borrowedMaterials.Contains(titleBookBack))
+                            {
+                                Console.Write("Auteur van het boek: ");
+                                string authorBookBack = Console.ReadLine().ToLower();
+
+                                Console.WriteLine($"{titleBookBack} van {authorBookBack} teruggebracht.");
+
+                                Array.Resize(ref boekTitel, boekTitel.Length + 1);
+                                boekTitel[boekTitel.Length - 1] = titleBookBack;
+                                Array.Resize(ref boekAuteurs, boekAuteurs.Length + 1);
+                                boekAuteurs[boekAuteurs.Length - 1] = authorBookBack;
+
+                                //Remove from borrowed array
+                            }
+                        }
+                        else if (materialBack == "2")
+                        {
+                            Console.Write("Titel van de tijdschrift: ");
+                            string nameMagazineBack = Console.ReadLine().ToLower();
+                            if (borrowedMaterials.Contains(nameMagazineBack))
+                            {
+                                Console.WriteLine($"{nameMagazineBack} van teruggebracht.");
+
+                                Array.Resize(ref tijdschriftNamen, tijdschriftNamen.Length + 1);
+                                tijdschriftNamen[tijdschriftNamen.Length - 1] = nameMagazineBack;
+
+                                //Remove from borrowed array
+                            }
+                        }
+
                         break;
                     case "8":
                         ClearScreen();
