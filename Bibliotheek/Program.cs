@@ -106,8 +106,11 @@ namespace Bibliotheek
 
         private static void MaterialenTerugbrengen(ref string[] boekTitel, ref string[] boekAuteurs, ref string[] tijdschriftNamen, ref string[] borrowedMaterials, ref string[] borrowedUser)
         {
-            Console.WriteLine("Is het een boek of een tijdschrift? \n\t1. Boek\t2. Tijdschrift");
+            Console.WriteLine("Wilt u een boek of een tijdschrift terugbrengen? \n\t1. Boek\t\t2. Tijdschrift");
             string materialBack = Console.ReadLine();
+
+            ClearScreen();
+
             string nameBookOrMagazine = "";
             if (materialBack == "1")
             {
@@ -118,6 +121,8 @@ namespace Bibliotheek
                     Console.Write("Auteur van het boek: ");
                     string authorBookBack = Console.ReadLine().ToLower();
 
+                    ClearScreen();
+
                     Console.WriteLine($"{nameBookOrMagazine} van {authorBookBack} teruggebracht.");
 
                     Array.Resize(ref boekTitel, boekTitel.Length + 1);
@@ -125,19 +130,37 @@ namespace Bibliotheek
                     Array.Resize(ref boekAuteurs, boekAuteurs.Length + 1);
                     boekAuteurs[boekAuteurs.Length - 1] = authorBookBack;
                 }
+                else
+                {
+                    ClearScreen();
+
+                    Console.WriteLine($"{nameBookOrMagazine} is niet uitgeleend");
+                    Console.WriteLine();
+                }
             }
             else if (materialBack == "2")
             {
                 Console.Write("Titel van de tijdschrift: ");
                 nameBookOrMagazine = Console.ReadLine().ToLower();
+
+                ClearScreen() ;
+
                 if (borrowedMaterials.Contains(nameBookOrMagazine))
                 {
-                    Console.WriteLine($"{nameBookOrMagazine} van teruggebracht.");
+                    Console.WriteLine($"{nameBookOrMagazine} teruggebracht.");
+                    Console.WriteLine();
 
                     Array.Resize(ref tijdschriftNamen, tijdschriftNamen.Length + 1);
                     tijdschriftNamen[tijdschriftNamen.Length - 1] = nameBookOrMagazine;
 
                     //Remove from borrowed array
+                }
+                else
+                {
+                    ClearScreen() ;
+
+                    Console.WriteLine($"{nameBookOrMagazine} is niet uitgeleend");
+                    Console.WriteLine();
                 }
             }
             else
@@ -163,6 +186,9 @@ namespace Bibliotheek
             Console.WriteLine("1. Uitgeleend materialen zien.");
             Console.WriteLine("2. Materiaal lenen.");
             string lendChoice = Console.ReadLine();
+
+            ClearScreen();
+
             while (lendChoice == "1" || lendChoice == "2")
             {
                 if (lendChoice == "1")
@@ -175,6 +201,8 @@ namespace Bibliotheek
                     Console.WriteLine("Welke gebruiker wilt een materiaal uitlenen? ");
                     string renterUserInput = Console.ReadLine();
 
+                    ClearScreen();
+
                     if (gebruikers.Contains(renterUserInput))
                     {
                         bool inLendMenu = true;
@@ -184,6 +212,9 @@ namespace Bibliotheek
                             Console.WriteLine("Welke soort materiaal wilt de gebruiker uitlenen?");
                             Console.WriteLine("\t1. Boek \t2. Tijdschrift");
                             string materialChoice = Console.ReadLine();
+
+                            ClearScreen() ;
+
                             //if book available => ok
                             if (materialChoice == "1")
                             {
@@ -209,6 +240,8 @@ namespace Bibliotheek
                         //not client
                         Console.WriteLine($"{renterUserInput} is geen klant.\nWil {renterUserInput} een nieuw klant worden?\n\t1. Ja \t2. Nee");
                         string becomingClientChoice = Console.ReadLine();
+
+                        ClearScreen();
 
                         if (becomingClientChoice == "1")
                         {
@@ -236,8 +269,9 @@ namespace Bibliotheek
         {
             for (int i = 0; i < borrowedMaterials.Length; i++)
             {
-                Console.WriteLine($"{borrowedMaterials[i]} uitgeleend aan {borrowedUser[i]}.");
+                Console.WriteLine($"\t{borrowedMaterials[i]} uitgeleend aan {borrowedUser[i]}.");
             }
+            Console.WriteLine();
         }
 
         private static void LendMagazineAndArrayManagement(string[] tijdschriftNamen, string[] gebruikers, ref string[] borrowedMaterials, ref string[] borrowedUser, string renterUserInput)
@@ -270,6 +304,8 @@ namespace Bibliotheek
             string materialTitleChoice = Console.ReadLine().ToLower();
             if (boekTitel.Contains(materialTitleChoice))
             {
+                ClearScreen();
+
                 Console.WriteLine($"{materialTitleChoice} uitgeleend aan {renterUserInput}");
                 Array.Resize(ref borrowedMaterials, borrowedMaterials.Length + 1);
                 borrowedMaterials[borrowedMaterials.Length - 1] = materialTitleChoice;
