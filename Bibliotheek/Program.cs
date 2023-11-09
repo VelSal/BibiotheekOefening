@@ -87,79 +87,7 @@ namespace Bibliotheek
                     case "6":
                         ClearScreen();
                         Console.WriteLine("\"Materialen uitlenen\" gekozen.");
-                        Console.WriteLine("1. Uitgeleend materialen zien.");
-                        Console.WriteLine("2. Materiaal lenen.");
-                        string lendChoice = Console.ReadLine();
-                        while (lendChoice == "1" || lendChoice == "2")
-                        {
-                            if (lendChoice == "1")
-                            {
-                                for (int i = 0; i < borrowedMaterials.Length; i++)
-                                {
-                                    Console.WriteLine($"{borrowedMaterials[i]} uitgeleend aan {borrowedUser[i]}.");
-                                }
-                                break;
-                            }
-                            else if (lendChoice == "2")
-                            {
-                                Console.WriteLine("Welke gebruiker wilt een materiaal uitlenen? ");
-                                string renterUserInput = Console.ReadLine();
-
-                                if (gebruikers.Contains(renterUserInput))
-                                {
-                                    bool inLendMenu = true;
-                                    while (inLendMenu)
-                                    {
-                                        //What material to lend
-                                        Console.WriteLine("Welke soort materiaal wilt de gebruiker uitlenen?");
-                                        Console.WriteLine("\t1. Boek \t2. Tijdschrift");
-                                        string materialChoice = Console.ReadLine();
-                                        //if book available => ok
-                                        if (materialChoice == "1")
-                                        {
-                                            Console.Write("Titel van de boek: ");
-                                            LendBookAndArrayManagement(boekTitel, boekAuteurs, gebruikers, ref borrowedMaterials, ref borrowedUser, renterUserInput);
-                                            inLendMenu = false;
-                                        }
-                                        else if (materialChoice == "2")
-                                        {
-                                            Console.Write("Titel van de tijdschrift: ");
-                                            LendMagazineAndArrayManagement(tijdschriftNamen, gebruikers, ref borrowedMaterials, ref borrowedUser, renterUserInput);
-                                            inLendMenu = false;
-                                        }
-                                        else
-                                        {
-                                            Console.WriteLine("Verkeerde invoer...");
-                                            inLendMenu = false;
-                                        }
-                                    }
-                                }
-                                else 
-                                {
-                                    //not client
-                                    Console.WriteLine($"{renterUserInput} is geen klant.\nWil {renterUserInput} een nieuw klant worden?\n\t1. Ja \t2. Nee");
-                                    string becomingClientChoice = Console.ReadLine();
-
-                                    if (becomingClientChoice == "1")
-                                    {
-                                        Array.Resize(ref gebruikers, gebruikers.Length + 1);
-                                        gebruikers[gebruikers.Length - 1] = renterUserInput;
-
-                                        Console.WriteLine($"{renterUserInput} is nu een gebruiker van de O, R & S bibliotheek!\n");
-                                    }
-                                    else if (becomingClientChoice == "2")
-                                    {
-                                        Console.WriteLine("Sorry maar u moet een klant zijn om iets te lenen...");
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("Wrong Input");
-                                    }
-                                }
-                                
-                                break;
-                            }
-                        }
+                        MaterialenUitlenen(boekTitel, boekAuteurs, tijdschriftNamen, ref gebruikers, ref borrowedMaterials, ref borrowedUser);
                         break;
                     case "7":
                         ClearScreen();
@@ -175,6 +103,83 @@ namespace Bibliotheek
                         ClearScreen();
                         Console.WriteLine($"\"{userMenuChoiceInput}\" is niet in de menu.\n");
                         break;
+                }
+            }
+        }
+
+        private static void MaterialenUitlenen(string[] boekTitel, string[] boekAuteurs, string[] tijdschriftNamen, ref string[] gebruikers, ref string[] borrowedMaterials, ref string[] borrowedUser)
+        {
+            Console.WriteLine("1. Uitgeleend materialen zien.");
+            Console.WriteLine("2. Materiaal lenen.");
+            string lendChoice = Console.ReadLine();
+            while (lendChoice == "1" || lendChoice == "2")
+            {
+                if (lendChoice == "1")
+                {
+                    for (int i = 0; i < borrowedMaterials.Length; i++)
+                    {
+                        Console.WriteLine($"{borrowedMaterials[i]} uitgeleend aan {borrowedUser[i]}.");
+                    }
+                    break;
+                }
+                else if (lendChoice == "2")
+                {
+                    Console.WriteLine("Welke gebruiker wilt een materiaal uitlenen? ");
+                    string renterUserInput = Console.ReadLine();
+
+                    if (gebruikers.Contains(renterUserInput))
+                    {
+                        bool inLendMenu = true;
+                        while (inLendMenu)
+                        {
+                            //What material to lend
+                            Console.WriteLine("Welke soort materiaal wilt de gebruiker uitlenen?");
+                            Console.WriteLine("\t1. Boek \t2. Tijdschrift");
+                            string materialChoice = Console.ReadLine();
+                            //if book available => ok
+                            if (materialChoice == "1")
+                            {
+                                Console.Write("Titel van de boek: ");
+                                LendBookAndArrayManagement(boekTitel, boekAuteurs, gebruikers, ref borrowedMaterials, ref borrowedUser, renterUserInput);
+                                inLendMenu = false;
+                            }
+                            else if (materialChoice == "2")
+                            {
+                                Console.Write("Titel van de tijdschrift: ");
+                                LendMagazineAndArrayManagement(tijdschriftNamen, gebruikers, ref borrowedMaterials, ref borrowedUser, renterUserInput);
+                                inLendMenu = false;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Verkeerde invoer...");
+                                inLendMenu = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //not client
+                        Console.WriteLine($"{renterUserInput} is geen klant.\nWil {renterUserInput} een nieuw klant worden?\n\t1. Ja \t2. Nee");
+                        string becomingClientChoice = Console.ReadLine();
+
+                        if (becomingClientChoice == "1")
+                        {
+                            Array.Resize(ref gebruikers, gebruikers.Length + 1);
+                            gebruikers[gebruikers.Length - 1] = renterUserInput;
+
+                            Console.WriteLine($"{renterUserInput} is nu een gebruiker van de O, R & S bibliotheek!\n");
+                        }
+                        else if (becomingClientChoice == "2")
+                        {
+                            Console.WriteLine("Sorry maar u moet een klant zijn om iets te lenen...");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong Input");
+                        }
+                    }
+
+                    break;
                 }
             }
         }
