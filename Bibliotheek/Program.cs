@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -103,56 +104,59 @@ namespace Bibliotheek
                             {
                                 Console.WriteLine("Welke gebruiker wilt een materiaal uitlenen? ");
                                 string renterUserInput = Console.ReadLine();
-                                for (int i = 0; i < gebruikers.Length; i++)
+
+                                if (gebruikers.Contains(renterUserInput))
                                 {
-                                    if (gebruikers[i].ToLower() == renterUserInput.ToLower())
+                                    bool inLendMenu = true;
+                                    while (inLendMenu)
                                     {
-                                        bool inLendMenu = true;
-                                        while (inLendMenu)
+                                        //What material to lend
+                                        Console.WriteLine("Welke soort materiaal wilt de gebruiker uitlenen?");
+                                        Console.WriteLine("\t1. Boek \t2. Tijdschrift");
+                                        string materialChoice = Console.ReadLine();
+                                        //if book available => ok
+                                        if (materialChoice == "1")
                                         {
-                                            //What material to lend
-                                            Console.WriteLine("Welke soort materiaal wilt de gebruiker uitlenen?");
-                                            Console.WriteLine("\t1. Boek \t2. Tijdschrift");
-                                            string materialChoice = Console.ReadLine();
-                                            //if book available => ok
-                                            if (materialChoice == "1")
-                                            {
-                                                Console.Write("Titel van de boek: ");
-                                                //LendBookAndArrayManagement(boekTitel, boekAuteurs, gebruikers, ref borrowedMaterials, ref borrowedUser, i);
-
-                                                LendBookAndArrayManagement(boekTitel, boekAuteurs, gebruikers, ref borrowedMaterials, ref borrowedUser, renterUserInput, i);
-
-                                                inLendMenu = false;
-                                            }
-                                            else if (materialChoice == "2")
-                                            {
-                                                Console.Write("Titel van de tijdschrift: ");
-                                                LendMagazineAndArrayManagement(tijdschriftNamen, gebruikers, ref borrowedMaterials, ref borrowedUser, renterUserInput, i);
-                                                inLendMenu = false;
-                                            }
-                                            else
-                                            {
-                                                Console.WriteLine("Verkeerde invoer...");
-                                                inLendMenu = false;
-                                            }
-                                            
-                                            //remove material from first array
+                                            Console.Write("Titel van de boek: ");
+                                            LendBookAndArrayManagement(boekTitel, boekAuteurs, gebruikers, ref borrowedMaterials, ref borrowedUser, renterUserInput);
+                                            inLendMenu = false;
                                         }
+                                        else if (materialChoice == "2")
+                                        {
+                                            Console.Write("Titel van de tijdschrift: ");
+                                            LendMagazineAndArrayManagement(tijdschriftNamen, gebruikers, ref borrowedMaterials, ref borrowedUser, renterUserInput);
+                                            inLendMenu = false;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Verkeerde invoer...");
+                                            inLendMenu = false;
+                                        }
+                                    }
+                                }
+                                else 
+                                {
+                                    //not client
+                                    Console.WriteLine($"{renterUserInput} is geen klant.\nWil {renterUserInput} een nieuw klant worden?\n\t1. Ja \t2. Nee");
+                                    string becomingClientChoice = Console.ReadLine();
 
+                                    if (becomingClientChoice == "1")
+                                    {
+                                        Array.Resize(ref gebruikers, gebruikers.Length + 1);
+                                        gebruikers[gebruikers.Length - 1] = renterUserInput;
+
+                                        Console.WriteLine($"{renterUserInput} is nu een gebruiker van de O, R & S bibliotheek!\n");
+                                    }
+                                    else if (becomingClientChoice == "2")
+                                    {
+                                        Console.WriteLine("Sorry maar u moet een klant zijn om iets te lenen...");
                                     }
                                     else
                                     {
-                                        //User not in array
-                                        //Does the user want to be a client?
-                                        //if no : cw must be a client to borrow book
-                                        //if yes: what material to lend
-                                        //if book available => ok
-                                        //if not => not ok
-                                        //cw book lent to user
-                                        //remove material from first array
-                                        //add material to borrowed array
+                                        Console.WriteLine("Wrong Input");
                                     }
                                 }
+                                
                                 break;
                             }
                         }
@@ -172,6 +176,57 @@ namespace Bibliotheek
                         Console.WriteLine($"\"{userMenuChoiceInput}\" is niet in de menu.\n");
                         break;
                 }
+            }
+        }
+
+        private static void LendMagazineAndArrayManagement(string[] tijdschriftNamen, string[] gebruikers, ref string[] borrowedMaterials, ref string[] borrowedUser, string renterUserInput)
+        {
+            string materialTitleChoice = Console.ReadLine().ToLower();
+            if (tijdschriftNamen.Contains(materialTitleChoice))
+            {
+                Console.WriteLine($"{materialTitleChoice} uitgeleend aan {renterUserInput}");
+                Array.Resize(ref borrowedMaterials, borrowedMaterials.Length + 1);
+                borrowedMaterials[borrowedMaterials.Length - 1] = materialTitleChoice;
+                Array.Resize(ref borrowedUser, borrowedUser.Length + 1);
+                borrowedUser[borrowedUser.Length - 1] = renterUserInput;
+
+                for (int j = 0; j < tijdschriftNamen.Length; j++)
+                {
+                    if (tijdschriftNamen[j].ToLower() == materialTitleChoice.ToLower())
+                    {
+                        tijdschriftNamen[j] = "";
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine($"{materialTitleChoice} is niet beschikbaar.");
+            }
+        }
+
+        private static void LendBookAndArrayManagement(string[] boekTitel, string[] boekAuteurs, string[] gebruikers, ref string[] borrowedMaterials, ref string[] borrowedUser, string renterUserInput)
+        {
+            string materialTitleChoice = Console.ReadLine().ToLower();
+            if (boekTitel.Contains(materialTitleChoice))
+            {
+                Console.WriteLine($"{materialTitleChoice} uitgeleend aan {renterUserInput}");
+                Array.Resize(ref borrowedMaterials, borrowedMaterials.Length + 1);
+                borrowedMaterials[borrowedMaterials.Length - 1] = materialTitleChoice;
+                Array.Resize(ref borrowedUser, borrowedUser.Length + 1);
+                borrowedUser[borrowedUser.Length - 1] = renterUserInput;
+
+                for (int j = 0; j < boekTitel.Length; j++)
+                {
+                    if (boekTitel[j].ToLower() == materialTitleChoice.ToLower())
+                    {
+                        boekTitel[j] = "";
+                        boekAuteurs[j] = "";
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine($"{materialTitleChoice} is niet beschikbaar.");
             }
         }
 
@@ -228,10 +283,7 @@ namespace Bibliotheek
 
         
 
-        //private static void LendMagazine(string[] tijdschriftNamen, string[] gebruikers, ref string[] borrowedMaterials, ref string[] borrowedUser, int i)
-        //{
-
-        //}
+        
         private static string[] RegistreerGebruiker(string[] gebruikers)
         {
             Console.Write("Naam van de nieuwe gebruiker: ");
